@@ -2,7 +2,7 @@ version: '3'
 services:
   
   backend:
-#    build:
+#    build:     # use when you don't have image build this is for making build/image.
 #      context: .
     image: salmansarwar/flask-app:latest
     ports:
