@@ -13,10 +13,10 @@ cd two-tier-flask-app/k8s
 ```
 - Now, execute below commands one by one
 ```bash
-kubectl apply -f twotier-deployment.yml
+kubectl apply -f two-tier-flaskapp-deployment.yml
 ```
 ```bash
-kubectl apply -f twotier-deployment-svc.yml
+kubectl apply -f two-tier-flaskapp-deployment-svc.yml
 ```
 ```bash
 kubectl apply -f mysql-deployment.yml
@@ -25,8 +25,8 @@ kubectl apply -f mysql-deployment.yml
 kubectl apply -f mysql-deployment-svc.yml
 ```
 ```bash
-kubectl apply -f persistent-volume.yml
+kubectl apply -f mysql-pv.yml
 ```
 ```bash
-kubectl apply -f persistent-volume-claim.yml
+kubectl apply -f mysql-pvc.yml
 ```
