@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+    
+    stages{
+        stage("CloneCode"){
+            steps {
+             echo "Cloning the Code" 
+             git url: "https://github.com/org-salman/two-tier-flask-app-dockerization.git", branch : "master"
+            }
+        }
+        stage("Build"){
+            steps {
+             echo "Building the Image"
+             sh "docker build -t flask-app ."
+             sh "docker images"
+            }
+        }
+        stage("Push Image to Dockerhub"){
+            steps {
+             echo "Pushing Image Build to Dockerhub"
+             withCredentials([usernamePassword(credentialsId: "dockerhub",passwordVariable: "dockerhubPass", usernameVariable:"dockerhubUname")]){
+             sh "docker tag flask-app ${env.dockerhubUname}/flask-app:latest"
+             sh "docker login -u ${env.dockerhubUname} -p ${env.dockerhubPass}"
+             sh "docker push ${env.dockerhubUname}/flask-app:latest"
+             }
+            }
+        }
+        stage("Deploy"){
+            steps {
+                echo "Deploying the Dockerhub images"
+                sh "docker-compose down && docker-compose up -d"
+            }
+        }
+    }
+}
